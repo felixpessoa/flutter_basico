@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,31 +20,47 @@ class HomePage extends StatelessWidget {
   _body() {
     return Container(
       //margin: const EdgeInsets.only(left: 10, top: 10),
-      color: Colors.white,
-      child:  Center(
-        child: _img(),
+      color: Colors.yellow,
+      child: Row(
+        // mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _button(),
+          _button(),
+          _button(),
+          _button(),
+        ],
       ),
     );
   }
 
-  _button(){
+
+  _button() {
     return RaisedButton(
-      child: Text("Ok"),
-      onPressed: () {
-        print("Clicou no botão!");
-      },
+      color: Colors.blue,
+      child: Text(
+        "Ok",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 30,
+        ),
+      ),
+      onPressed: () => _OnClickOk,
     );
+  }
+
+  void _OnClickOk() {
+    print("Clicou no botão!");
   }
 
   _img() {
     // ( .asset pega imagem do assets / .network pega imagem da URL / .file pega imagem de um arquivo.
     return Image.asset(
-        "assets/img/dog4.png",
-        fit: BoxFit.cover,
-        /*width: 300,
+      "assets/img/dog4.png",
+      fit: BoxFit.cover,
+      /*width: 300,
         height: 300,
         fit: BoxFit.cover,*/
-
     );
   }
 
@@ -63,6 +78,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-
 }

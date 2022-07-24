@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_basico/pages/hello_page1.dart';
+import 'package:flutter_basico/pages/hello_page2.dart';
+import 'package:flutter_basico/pages/hello_page3.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,51 +15,102 @@ class HomePage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: _body(),
+      body: _body(context),
     );
   }
 
-  _body() {
+  _body(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.only(left: 10, top: 10),
-      color: Colors.yellow,
-      child: Row(
-        // mainAxisSize: MainAxisSize.min,
+      color: Colors.white,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _button(),
-          _button(),
-          _button(),
-          _button(),
+        children: [
+          _text(),
+          _pageView(),
+          _buttons(context),
         ],
       ),
     );
   }
 
-
-  _button() {
-    return RaisedButton(
-      color: Colors.blue,
-      child: Text(
-        "Ok",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 30,
-        ),
+  _pageView() {
+    return Container(
+      margin: EdgeInsets.only(top: 20, bottom: 20),
+      height: 300,
+      child: PageView(
+        children: [
+          _img("assets/img/dog1.png"),
+          _img("assets/img/dog2.png"),
+          _img("assets/img/dog3.png"),
+          _img("assets/img/dog4.png"),
+          _img("assets/img/dog5.png"),
+        ],
       ),
-      onPressed: () => _OnClickOk,
     );
   }
 
-  void _OnClickOk() {
-    print("Clicou no botão!");
+  _buttons(context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _button(context, "ListView", () => _OnClickNavigator(context, HelloPage1())),
+            _button(context, "Page 2", () => _OnClickNavigator(context, HelloPage2())),
+            _button(context, "Page 3", () => _OnClickNavigator(context, HelloPage3())),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _button(context, "Snack", _OnClickSnack),
+            _button(context, "Dialog", _onClickDialog),
+            _button(context, "Toast", _onClickToast),
+          ],
+        )
+      ],
+    );
   }
 
-  _img() {
+  void _OnClickNavigator(BuildContext context, Widget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return page;
+    }));
+  }
+
+  _OnClickSnack() {
+  }
+
+  _onClickDialog() {
+  }
+
+  _onClickToast() {
+  }
+
+  _button(BuildContext context, String text, Function onPressed) {
+    return RaisedButton(
+      color: Colors.blue,
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+      ),
+      onPressed: () => onPressed,
+    );
+  }
+
+  
+
+  _img(String img) {
     // ( .asset pega imagem do assets / .network pega imagem da URL / .file pega imagem de um arquivo.
-    return Image.asset(
-      "assets/img/dog4.png",
-      fit: BoxFit.cover,
+    return Container(
+      margin: EdgeInsets.only(top:10, bottom: 10),
+      child: Image.asset(
+        img,
+        fit: BoxFit.cover,
+      ),
       /*width: 300,
         height: 300,
         fit: BoxFit.cover,*/
@@ -78,4 +131,8 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  
 }
+
+

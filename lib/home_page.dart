@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basico/pages/hello_listview.dart';
 import 'package:flutter_basico/pages/hello_page1.dart';
 import 'package:flutter_basico/pages/hello_page2.dart';
 import 'package:flutter_basico/pages/hello_page3.dart';
+import 'package:flutter_basico/utils/nav.dart';
+import 'package:flutter_basico/widgets/blue_button.dart';
 
 class HomePage extends StatelessWidget {
+ 
+
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -55,58 +60,50 @@ class HomePage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _button(context, "ListView", () => _OnClickNavigator(context, HelloPage1())),
-            _button(context, "Page 2", () => _OnClickNavigator(context, HelloPage2())),
-            _button(context, "Page 3", () => _OnClickNavigator(context, HelloPage3())),
+            BlueButton("ListView",
+                onPressed: () => _onClickNavigator(context, HelloListView())),
+            BlueButton("Page 2",
+                onPressed: () => _onClickNavigator(context, HelloPage2())),
+            BlueButton("Page 3",
+                onPressed: () => _onClickNavigator(context, HelloPage3())),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _button(context, "Snack", _OnClickSnack),
-            _button(context, "Dialog", _onClickDialog),
-            _button(context, "Toast", _onClickToast),
+            BlueButton("Snack", onPressed: _OnClickSnack),
+            BlueButton("Dialog", onPressed: _onClickDialog),
+            BlueButton("Toast", onPressed: _onClickToast),
           ],
         )
       ],
     );
   }
 
-  void _OnClickNavigator(BuildContext context, Widget page) {
+  
+
+  void _onClickNavigator(BuildContext context, Widget page) async {
+    String   s = await push(context, page);
+   
+    print(">> $s");
+  }
+
+  void _onClickOk(BuildContext context) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return page;
+      return HelloPage3();
     }));
   }
 
-  _OnClickSnack() {
-  }
+  _OnClickSnack() {}
 
-  _onClickDialog() {
-  }
+  _onClickDialog() {}
 
-  _onClickToast() {
-  }
-
-  _button(BuildContext context, String text, Function onPressed) {
-    return RaisedButton(
-      color: Colors.blue,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-        ),
-      ),
-      onPressed: () => onPressed,
-    );
-  }
-
-  
+  _onClickToast() {}
 
   _img(String img) {
     // ( .asset pega imagem do assets / .network pega imagem da URL / .file pega imagem de um arquivo.
     return Container(
-      margin: EdgeInsets.only(top:10, bottom: 10),
+      margin: EdgeInsets.only(top: 10, bottom: 10),
       child: Image.asset(
         img,
         fit: BoxFit.cover,
@@ -131,8 +128,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  
 }
-
-
